@@ -1,0 +1,30 @@
+5.Implement a Java method that performs a linear search on an array of integers,
+returning the index of the target value if found or -1 if not.
+public class LinearSearch {
+
+    public static int linearSearch(int[] arr, int target) {
+        // Iterate through the array
+        for (int i = 0; i < arr.length; i++) {
+            // If target found, return the index
+            if (arr[i] == target) {
+                return i;
+            }
+        }
+        // If target not found, return -1
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = { 10, 20, 30, 40, 50 };
+        int target = 30;
+
+        int index = linearSearch(arr, target);
+
+        if (index != -1) {
+            System.out.println("Target " + target + " found at index: " + index); // Output: Target 30 found at index: 2
+        } else {
+            System.out.println("Target " + target + " not found in the array."); // Output: This line is not displayed in this example.
+        }
+    }
+}
+

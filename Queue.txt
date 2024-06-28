@@ -1,0 +1,64 @@
+3.Implement a generic Queue data structure in Java using a linked list. The Queue should support 
+the basic operations of enqueue, dequeue, peek, and check if the queue is empty.
+
+
+
+// Node class to represent each element in the queue
+class Node<T> {
+    T data;
+    Node<T> next;
+
+    public Node(T data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+// Queue class implementing the Queue data structure using a linked list
+class Queue<T> {
+    private Node<T> front; // front of the queue
+    private Node<T> rear;  // rear of the queue
+
+    public Queue() {
+        front = null;
+        rear = null;
+    }
+
+    // Method to add an element to the queue (enqueue operation)
+    public void enqueue(T item) {
+        Node<T> newNode = new Node<>(item);
+        if (isEmpty()) {
+            front = newNode;
+            rear = newNode;
+        } else {
+            rear.next = newNode;
+            rear = newNode;
+        }
+    }
+
+    // Method to remove an element from the queue (dequeue operation)
+    public T dequeue() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Queue is empty. Cannot dequeue.");
+        }
+        T data = front.data;
+        front = front.next;
+        if (front == null) {
+            rear = null; // if queue becomes empty after dequeue
+        }
+        return data;
+    }
+
+    // Method to get the front element of the queue without removing it (peek operation)
+    public T peek() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Queue is empty. Cannot peek.");
+        }
+        return front.data;
+    }
+
+    // Method to check if the queue is empty
+    public boolean isEmpty() {
+        return front == null;
+    }
+}

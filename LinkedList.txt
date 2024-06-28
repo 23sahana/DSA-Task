@@ -1,0 +1,136 @@
+4.Implement a `LinkedList` class in Java with methods to add, remove, retrieve, 
+and display elements, ensuring efficient handling of edge cases without using
+Java's built-in collection classes.
+
+// Node class to represent each element in the linked list
+class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+// LinkedList class implementing basic operations
+class LinkedList {
+    private Node head; // head of the linked list
+
+    public LinkedList() {
+        this.head = null;
+    }
+
+    // Method to add an element to the end of the linked list
+    public void add(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+    }
+
+    // Method to remove an element from the linked list
+    public void remove(int data) {
+        if (head == null) {
+            System.out.println("Linked list is empty. Cannot remove.");
+            return;
+        }
+
+        if (head.data == data) {
+            head = head.next;
+            return;
+        }
+
+        Node current = head;
+        Node prev = null;
+        while (current != null && current.data != data) {
+            prev = current;
+            current = current.next;
+        }
+
+        if (current == null) {
+            System.out.println("Element not found in the linked list.");
+            return;
+        }
+
+        prev.next = current.next;
+    }
+
+    // Method to retrieve an element from the linked list by index
+    public int get(int index) {
+        if (head == null) {
+            throw new IndexOutOfBoundsException("Linked list is empty. Index out of bounds.");
+        }
+
+        Node current = head;
+        int currentIndex = 0;
+        while (current != null && currentIndex < index) {
+            current = current.next;
+            currentIndex++;
+        }
+
+        if (current == null) {
+            throw new IndexOutOfBoundsException("Index out of bounds.");
+        }
+
+        return current.data;
+    }
+
+    // Method to display all elements of the linked list
+    public void display() {
+        if (head == null) {
+            System.out.println("Linked list is empty.");
+            return;
+        }
+
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+}
+
+// Example usage:
+public class Main {
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+
+        list.add(10);
+        list.add(20);
+        list.add(30);
+
+        System.out.print("Linked list: ");
+        list.display(); // Output: Linked list: 10 20 30
+
+        list.remove(20);
+
+        System.out.print("Linked list after removing 20: ");
+        list.display(); // Output: Linked list after removing 20: 10 30
+
+        int element = list.get(1);
+        System.out.println("Element at index 1: " + element); // Output: Element at index 1: 30
+
+        list.remove(10);
+        list.remove(30);
+        list.remove(40); // Trying to remove non-existing element
+
+        System.out.print("Linked list after removing all elements: ");
+        list.display(); // Output: Linked list after removing all elements: Linked list is empty.
+
+        // Trying to get an element from an empty list (should throw exception)
+        try {
+            list.get(0);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Exception caught: " + e.getMessage()); // Output: Exception caught: Linked list is empty. Index out of bounds.
+        }
+    }
+}
+

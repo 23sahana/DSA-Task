@@ -1,0 +1,83 @@
+1.Create a Java class that implements basic operations on a dynamic array.
+ The class should be able to handle typical array operations such as insertion,
+ deletion, updating, and retrieval of elements.
+public class DynamicArray<T> {
+    private T[] array;
+    private int size;
+
+    public DynamicArray() {
+        array = (T[]) new Object[10]; // initial capacity of 10
+        size = 0;
+    }
+
+    // Insert an element at the end of the array
+    public void add(T element) {
+        if (size == array.length) {
+            resize();
+        }
+        array[size++] = element;
+    }
+
+    // Insert an element at a specific index
+    public void insert(int index, T element) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (size == array.length) {
+            resize();
+        }
+        for (int i = size; i > index; i--) {
+            array[i] = array[i - 1];
+        }
+        array[index] = element;
+        size++;
+    }
+
+    // Remove an element at a specific index
+    public T remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        T element = array[index];
+        for (int i = index; i < size - 1; i++) {
+            array[i] = array[i + 1];
+        }
+        size--;
+        return element;
+    }
+
+    // Update an element at a specific index
+    public void update(int index, T element) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        array[index] = element;
+    }
+
+    // Retrieve an element at a specific index
+    public T get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        return array[index];
+    }
+
+    // Resize the array when it reaches capacity
+    private void resize() {
+        T[] newArray = (T[]) new Object[array.length * 2];
+        for (int i = 0; i < array.length; i++) {
+            newArray[i] = array[i];
+        }
+        array = newArray;
+    }
+
+    // Get the size of the array
+    public int size() {
+        return size;
+    }
+
+    // Check if the array is empty
+    public boolean isEmpty() {
+        return size == 0;
+    }
+}
